@@ -29,7 +29,9 @@ namespace EgorLab.Models.StorageModels
                 {
                     throw new IndexOutOfRangeException();
                 }
-                person = value;
+                person.Name = value.Name;
+                person.SurName = value.SurName;
+                person.Age = value.Age;
             }
         }
 
