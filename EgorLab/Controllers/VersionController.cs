@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EgorLab.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/version")]
     [ApiController]
     public class VersionController : ControllerBase
     {
