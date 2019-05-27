@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EgorLab.Configuration;
 using EgorLab.Models;
 using EgorLab.Models.StorageModels;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,19 @@ namespace EgorLab
             services.AddSingleton<IStorage<Person>, MemStorage>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            switch (Configuration["Storage:Type"].ToStorageEnum())
+            {
+                case StorageEnum.MemCache:
+                    services.AddSingleton<IStorage<Person>, MemStorage>();
+                    break;
+                case StorageEnum.FileStorage:
+                    services.AddSingleton<IStorage<Person>>(
+                        x => new FileStorage(Configuration["Storage:FileStorage:Filename"], int.Parse(Configuration["Storage:FileStorage:FlushPeriod"])));
+                    break;
+                default:
+                    throw new IndexOutOfRangeException($"Storage type '{Configuration["Storage:Type"]}' is unknown");
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +53,7 @@ namespace EgorLab
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseMvc();         
         }
     }
 }
