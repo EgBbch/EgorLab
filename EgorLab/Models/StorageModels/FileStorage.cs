@@ -33,13 +33,17 @@ namespace EgorLab.Models.StorageModels
 
                 try
                 {
-                    var deserialized = JsonConvert.DeserializeObject<List<LabData>>(allLines);
+                    var deserialized = JsonConvert.DeserializeObject<List<Person>>(allLines);
 
                     if (deserialized != null)
                     {
                         foreach (var labData in deserialized)
                         {
-                            base[labData.Id] = labData;
+                            try
+                            {
+                                base[labData.Id] = labData;
+                            }
+                            catch { }
                         }
                     }
                 }

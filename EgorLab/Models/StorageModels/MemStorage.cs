@@ -27,7 +27,7 @@ namespace EgorLab.Models.StorageModels
                 var person = people.FirstOrDefault(v => v.Id == id);
                 if (person == null)
                 {
-                    throw new IndexOutOfRangeException();
+                    people.Add(value);
                 }
                 person.Name = value.Name;
                 person.SurName = value.SurName;
