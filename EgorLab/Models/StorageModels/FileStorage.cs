@@ -11,7 +11,6 @@ namespace EgorLab.Models.StorageModels
     public class FileStorage : MemStorage, IStorage<Person>
     {
         private Timer _timer;
-
         public string FileName { get; }
         public int FlushPeriod { get; }
 
